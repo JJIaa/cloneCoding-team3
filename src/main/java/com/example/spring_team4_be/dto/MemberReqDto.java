@@ -12,4 +12,6 @@ public class MemberReqDto {
     private String username;
     @NotBlank
     private String password;
+    @NotBlank
+    private String dateOfBirth;
 }

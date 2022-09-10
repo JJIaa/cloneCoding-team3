@@ -37,6 +37,9 @@ public class Member extends Timestamped {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String dateOfBirth;
+
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "member", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Heart> hearts;
