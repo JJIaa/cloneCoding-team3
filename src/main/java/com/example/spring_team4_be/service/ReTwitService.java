@@ -40,25 +40,22 @@ public class ReTwitService {
 
         List<ReTwit> reTwitList = reTwitRepository.findAllByMemberIdAndTwitId(member.getId(),twit_id);
 
-        boolean reTwitCheck = false;
         for(ReTwit reTwit : reTwitList){
             if(reTwit.getMember().equals(member)){
-                reTwitCheck = true;
                 reTwitRepository.delete(reTwit);
                 log.info("리트윗 취소");
                 return ResponseDto.success("리트윗이 취소 되었습니다.");
             }
         }
-        if(reTwitCheck!= true){
-            ReTwit reTwit = ReTwit.builder()
-                    .member(member)
-                    .twit(twit)
-                    .build();
-            reTwitRepository.save(reTwit);
-            log.info("리트윗 성공");
-            return ResponseDto.success("리트윗이 등록 되었습니다.");
-        }
-        return null;
+
+        ReTwit reTwit = ReTwit.builder()
+                .member(member)
+                .twit(twit)
+                .build();
+        reTwitRepository.save(reTwit);
+        log.info("리트윗 성공");
+        return ResponseDto.success("리트윗이 등록 되었습니다.");
+
     }
 
     @Transactional
