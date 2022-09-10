@@ -50,25 +50,23 @@ public class HeartService {
         List<Heart> heartList = heartRepository.findByMemberIdAndTwitId(member.getId(), twit_id);
 
 
-        boolean heartcheck = false;
+
         for(Heart heart : heartList){
             if(heart.getMember().equals(member)){
-                heartcheck = true;
                 heartRepository.delete(heart);
                 log.info("좋아요 취소");
                 return ResponseDto.success("좋아요가 취소 되었습니다.");
             }
         }
-        if(heartcheck!= true){
-            Heart heart = Heart.builder()
-                            .member(member)
-                            .twit(twit)
-                            .build();
-            heartRepository.save(heart);
-            log.info("좋아요 등록.");
-            return ResponseDto.success("좋아요가 등록 되었습니다.");
-        }
-        return null;
+
+        Heart heart = Heart.builder()
+                        .member(member)
+                        .twit(twit)
+                        .build();
+        heartRepository.save(heart);
+        log.info("좋아요 등록.");
+        return ResponseDto.success("좋아요가 등록 되었습니다.");
+
     }
 
     @Transactional
