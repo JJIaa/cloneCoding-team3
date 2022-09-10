@@ -35,25 +35,21 @@ public class FollowService {
 
         List<Follow> followList = followRepository.findAllByFollowerAndFollowing(member,following);
 
-        boolean followCheck = false;
         for(Follow follow : followList){
             if(follow.getFollower().equals(member)){
-                followCheck = true;
                 followRepository.delete(follow);
                 log.info("팔로우 취소");
                 return ResponseDto.success("팔로우가 취소 되었습니다.");
             }
         }
-        if(followCheck!= true){
-            Follow follow = Follow.builder()
-                    .follower(member)
-                    .following(following)
-                    .build();
-            followRepository.save(follow);
-            log.info("팔로우 성공");
-            return ResponseDto.success("팔로우가 등록 되었습니다.");
-        }
-        return null;
+        Follow follow = Follow.builder()
+                .follower(member)
+                .following(following)
+                .build();
+        followRepository.save(follow);
+        log.info("팔로우 성공");
+        return ResponseDto.success("팔로우가 등록 되었습니다.");
+
     }
 
     @Transactional
